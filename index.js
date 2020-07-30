@@ -2,30 +2,33 @@
 function renderPage() {
 
 };
-// when clicked save, add to local memory for that hour
 
+// when save is clicked, add to local memory for that hour
+var hourTask = [];
 
+$(".saveBtn").on("click", function saveHourText() {
+    let currentHourValue = this.id;
+    let currentText = $(".textarea").eq(currentHourValue).val();
+    console.log(currentText);
+    hourTask.push({currentHourValue, currentText});
+    hourTask = JSON.stringify(hourTask);
+    localStorage.setItem("hourTask", hourTask);
+});
 
 
 //add current date to header
 $("#currentDay").text(moment().format("dddd, MMMM Do YYYY"));
 
 // format color of text area conditionally based on if hour is past, present, or future
-let hourArray = $(".textarea");
 
-function colorCodeHours() {
-    for (let i = 0; hourArray.length; i++) {
-        let currentTextId = parseInt(hourArray[i].id);
-        let currentHour = moment().hour();
-
-        if (currentTextId < currentHour) {
-            hourArray.eq(i).addClass("past");
-        } else if (currentTextId == currentHour) {
-            hourArray.eq(i).addClass("present");
-        } else if (currentTextId > currentHour) {
-            hourArray.eq(i).addClass("future");
-        }
+$( ".textarea" ).each(function(index, value ) {
+    let textHour = $(value).attr("value");
+    let currentHour = 10//moment().hour();
+    if (textHour < currentHour) {
+        $(this).addClass("past");
+    } else if (textHour == currentHour) {
+        $(this).addClass("present");
+    } else if (textHour > currentHour) {
+        $(this).addClass("future");
     };
-};
-
-colorCodeHours();
+});
