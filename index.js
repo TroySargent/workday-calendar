@@ -11,8 +11,7 @@ $(".saveBtn").on("click", function saveHourText() {
     let currentText = $(".textarea").eq(currentHourValue).val();
     console.log(currentText);
     hourTask.push({currentHourValue, currentText});
-    hourTask = JSON.stringify(hourTask);
-    localStorage.setItem("hourTask", hourTask);
+    localStorage.setItem("hourTask", JSON.stringify(hourTask));
 });
 
 
@@ -23,7 +22,7 @@ $("#currentDay").text(moment().format("dddd, MMMM Do YYYY"));
 
 $( ".textarea" ).each(function(index, value ) {
     let textHour = $(value).attr("value");
-    let currentHour = 10//moment().hour();
+    let currentHour =  moment().hour();
     if (textHour < currentHour) {
         $(this).addClass("past");
     } else if (textHour == currentHour) {
